@@ -3,14 +3,16 @@
         <file>Recursos/avion.png</file>
         <file>Recursos/GWfighterslogo.png</file>
         <file>Recursos/mistaplane.png</file>
-        <file>Recursos/boton_1jugador.png</file>
-        <file>Recursos/boton_multijugador.png</file>
-        <file>Recursos/salir.png</file>
-        <file>Recursos/Fondo_Menu.jpg</file>
-        <file>Recursos/Giornos_Theme.mp3</file>
         <file>Recursos/giornos-theme.mp3</file>
         <file>Recursos/bit-vrc6-jojos-bizarre-adventure-golden-wind.mp3</file>
-        <file>Recursos/y2mate.com - Giornos Theme  Il Vento DOro 8bit VRC6 16bit SNES_64kbps.mp3</file>
         <file>Recursos/Fondo-Menu.jpg</file>
+        <file>Recursos/btn_1player.png</file>
+        <file>Recursos/btn_back.png</file>
+        <file>Recursos/btn_exit.png</file>
+        <file>Recursos/btn_multiplayer.png</file>
+        <file>Recursos/8-bit-kit-beep.wav</file>
+        <file>Recursos/hit-01.wav</file>
+        <file>Recursos/btn_loadpartida.png</file>
+        <file>Recursos/btn_npartida.png</file>
     </qresource>
 </RCC>

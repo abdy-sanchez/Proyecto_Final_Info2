@@ -7,6 +7,8 @@
 #include "juego.h"
 #include <QDebug>
 #include <QMediaPlayer>
+#include <QSoundEffect>
+#include <QMessageBox>
 
 
 
@@ -27,7 +29,18 @@ public:
     ~MainWindow();
 
 private slots:
+
     void on_Jugar_clicked();
+
+    void on_regresar_clicked();
+
+    void on_Salir_clicked();
+
+    void on_Multijugador_clicked();
+
+    void on_nueva_partida_clicked();
+
+    void on_cargar_partida_clicked();
 
 private:
 
@@ -38,6 +51,10 @@ private:
     QGraphicsScene *escena_menu ;
 
     QMediaPlayer *music ;
+
+    QSoundEffect *efecto_boton_click ;
+
+    QMessageBox * msg_box ;
 
 
 };

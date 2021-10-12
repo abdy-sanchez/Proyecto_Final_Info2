@@ -27,14 +27,14 @@
    <widget class="QPushButton" name="Jugar">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>160</y>
+      <x>450</x>
+      <y>110</y>
       <width>121</width>
       <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/Recursos/boton_1jugador.png);</string>
+     <string notr="true">border-image: url(:/Recursos/btn_1player.png);</string>
     </property>
     <property name="text">
      <string/>
@@ -43,14 +43,14 @@
    <widget class="QPushButton" name="Multijugador">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>200</y>
+      <x>440</x>
+      <y>150</y>
       <width>131</width>
       <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/Recursos/boton_multijugador.png);</string>
+     <string notr="true">border-image: url(:/Recursos/btn_multiplayer.png);</string>
     </property>
     <property name="text">
      <string/>
@@ -59,14 +59,62 @@
    <widget class="QPushButton" name="Salir">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>240</y>
+      <x>460</x>
+      <y>190</y>
       <width>101</width>
       <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/Recursos/salir.png);</string>
+     <string notr="true">border-image: url(:/Recursos/btn_exit.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="regresar">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>300</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Recursos/btn_back.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="nueva_partida">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>160</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Recursos/btn_npartida.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cargar_partida">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>210</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Recursos/btn_loadpartida.png);</string>
     </property>
     <property name="text">
      <string/>
