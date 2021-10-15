@@ -120,6 +120,56 @@
      <string/>
     </property>
    </widget>
+   <widget class="QLineEdit" name="agregar_nombre">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>240</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Fixedsys</family>
+      <pointsize>11</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="aceptar">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>280</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Recursos/btn_aceptar.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="texto1">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>100</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Recursos/txt_pregunta.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

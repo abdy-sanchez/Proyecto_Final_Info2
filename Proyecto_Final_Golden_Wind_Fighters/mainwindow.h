@@ -9,6 +9,7 @@
 #include <QMediaPlayer>
 #include <QSoundEffect>
 #include <QMessageBox>
+#include <QFile>
 
 
 
@@ -42,6 +43,9 @@ private slots:
 
     void on_cargar_partida_clicked();
 
+
+    void on_aceptar_clicked();
+
 private:
 
     Ui::MainWindow *ui;
@@ -55,6 +59,7 @@ private:
     QSoundEffect *efecto_boton_click ;
 
     QMessageBox * msg_box ;
+
 
 
 };

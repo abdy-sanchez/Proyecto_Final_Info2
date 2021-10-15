@@ -25,6 +25,12 @@ private:
 
     QGraphicsScene *menu ;
 
+    int val_btn_presionado, nivel_jugador = 1, puntos_jugador = 0 ;
+
+    QString nombre_jugador ;
+
+
+
 };
 
 #endif // JUEGO_H

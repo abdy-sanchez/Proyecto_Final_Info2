@@ -14,5 +14,7 @@
         <file>Recursos/hit-01.wav</file>
         <file>Recursos/btn_loadpartida.png</file>
         <file>Recursos/btn_npartida.png</file>
+        <file>Recursos/btn_aceptar.png</file>
+        <file>Recursos/txt_pregunta.png</file>
     </qresource>
 </RCC>

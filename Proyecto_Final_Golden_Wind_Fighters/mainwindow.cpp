@@ -59,6 +59,25 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
     ui->cargar_partida->hide() ;
 
 
+        //Linea para Ingresar el nombre
+
+    ui->agregar_nombre->setGeometry( (GAME->tam_X/2)-(GAME->btx/2) , ((GAME->tam_Y + 6*(GAME->bty))/2)-(GAME->bty/2) , GAME->btx , GAME->bty );
+
+    ui->agregar_nombre->hide() ;
+
+        //Boton aceptar
+
+    ui->aceptar->setGeometry( (GAME->tam_X/2)-(GAME->btx/2) , ((GAME->tam_Y + 9*(GAME->bty))/2)-(GAME->bty/2) , GAME->btx , GAME->bty );
+
+    ui->aceptar->hide() ;
+
+
+        //texto pregunta
+
+    ui->texto1->setGeometry( 300 , 250 , 200 , 50 );
+
+    ui->texto1->hide() ;
+
         //Configuracion de la musica de menu
 
     music = new QMediaPlayer() ;
@@ -112,6 +131,9 @@ void MainWindow::on_Jugar_clicked(){
 
     ui->cargar_partida->show() ;
 
+    GAME->val_btn_presionado = 0 ;
+
+
 }
 
 void MainWindow::on_regresar_clicked(){
@@ -129,6 +151,16 @@ void MainWindow::on_regresar_clicked(){
     ui->nueva_partida->hide() ;
 
     ui->cargar_partida->hide() ;
+
+    ui->agregar_nombre->hide() ;
+
+    ui->aceptar->hide() ;
+
+    ui->texto1->hide() ;
+
+
+
+
 
 }
 
@@ -186,11 +218,41 @@ void MainWindow::on_Multijugador_clicked(){
     ui->nueva_partida->show() ;
 
     ui->cargar_partida->show() ;
+
+    GAME->val_btn_presionado = 1 ;
+
+
 }
 
 void MainWindow::on_nueva_partida_clicked(){
 
     efecto_boton_click->play() ;
+
+    ui->nueva_partida->hide() ;
+
+    ui->agregar_nombre->show() ;
+
+    ui->cargar_partida->hide() ;
+
+    ui->aceptar->show() ;
+
+    ui->texto1->show() ;
+
+    switch ( GAME->val_btn_presionado ){
+
+        case 0:{        //1 jugador
+
+
+
+        }break;
+
+        case 1:{        //multijugador
+
+
+
+        }break;
+
+    }
 
 
 }
@@ -198,4 +260,58 @@ void MainWindow::on_nueva_partida_clicked(){
 void MainWindow::on_cargar_partida_clicked(){
 
     efecto_boton_click->play() ;
+
+
+
+    ui->aceptar->show() ;
+
+    switch ( GAME->val_btn_presionado ){
+
+        case 0:{        //1 jugador
+
+
+
+        }break;
+
+        case 1:{        //multijugador
+
+
+
+        }break;
+
+    }
+
+
+}
+
+
+
+void MainWindow::on_aceptar_clicked(){
+
+    efecto_boton_click->play() ;
+
+    GAME->nombre_jugador = ui->agregar_nombre->text() ;
+
+    QFile archivo( "guardado.txt" ) ;           //meter todo esto en una funcion!!!
+
+    archivo.open( QIODevice::WriteOnly | QIODevice::Text) ; //el archivo sobre escribe (cambiar)
+
+    QTextStream out( &archivo );
+
+    out << GAME->nombre_jugador << " N:" << GAME->nivel_jugador << " P:" << GAME->puntos_jugador << ";" ;
+
+    out << "\n" ;
+
+
+    archivo.close() ;
+
+    ui->agregar_nombre->hide() ;
+
+    ui->aceptar->hide() ;
+
+    ui->texto1->hide() ;
+
+    ui->regresar->hide() ;
+
+
 }
