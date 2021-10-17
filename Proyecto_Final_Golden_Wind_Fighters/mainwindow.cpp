@@ -34,6 +34,7 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
 
 
 
+
         //Configuracion de los botones principales
 
     ui->Jugar->setGeometry( (GAME->tam_X/2)-(GAME->btx/2) , (GAME->tam_Y/2)-(GAME->bty/2) , GAME->btx , GAME->bty );
@@ -72,11 +73,19 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
     ui->aceptar->hide() ;
 
 
-        //texto pregunta
+        //texto pregunta, nueva partida, cargar partida
 
     ui->texto1->setGeometry( 300 , 250 , 200 , 50 );
 
     ui->texto1->hide() ;
+
+    ui->new_partida_txt->setGeometry( 283 , 200 , 230 , 50 ) ;
+
+    ui->new_partida_txt->hide() ;
+
+    ui->load_partida_txt->setGeometry( 283 , 200 , 230 , 50 ) ;
+
+    ui->load_partida_txt->hide() ;
 
         //Configuracion de la musica de menu
 
@@ -87,6 +96,15 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
     music->setVolume(30) ;
 
     music->play() ;
+
+
+        //Configuracion de la musica del juego
+
+    msc_2 = new QMediaPlayer() ;
+
+    msc_2->setMedia( QUrl("qrc:/Recursos/Fighting_Gold.mp3") ) ;
+
+    msc_2->setVolume( 10 ) ;
 
 
         //Vonfiguracion sonido de lso botones
@@ -100,13 +118,136 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
 
 }
 
+void MainWindow::Guardar_nuevo_jugador(){
+
+
+    GAME->nombre_jugador = ui->agregar_nombre->text() ;
+
+    QFile archivo( "guardado.txt" ) ;
+
+    archivo.open( QFile::Append | QFile::Text) ;
+
+    QTextStream out( &archivo );
+
+
+    QFile arch_2( "guardado.txt" ) ;
+
+    GAME->existente_name = true ;
+
+    if( arch_2.open( QFile::ReadOnly | QFile::Text ) ){
+
+        QTextStream leer_name( &arch_2 ) ;
+
+        while( !leer_name.atEnd() ){
+
+            QString linea = leer_name.readLine();
+
+            QString comparacion ;
+
+            comparacion = linea.section(" " , 0 , 0 ) ;
+
+
+            if( comparacion == GAME->nombre_jugador.replace( " ", "_" ) ){
+
+                    GAME->existente_name = false ;
+            }
+
+        }//fin while
+
+        arch_2.close() ;
+
+    }//fin if arch2
+
+
+    if( GAME->existente_name ){
+
+
+        out << GAME->nombre_jugador.replace( " ", "_" ) << " N:" << GAME->nivel_jugador << " P:" << GAME->puntos_jugador << ";" ;
+
+        out << "\n" ;
+
+    }
+    else{
+
+        msg_box = new QMessageBox ;
+
+        msg_box->setWindowIcon( QIcon( ":/Recursos/GWfighterslogo.png" ) ) ;
+
+        msg_box->setWindowTitle("ERROR") ;
+
+        msg_box->setText( "El Nombre (" + GAME->nombre_jugador + ") Ya Existe..." ) ;
+
+        msg_box->exec() ;
+
+        delete msg_box ;
+    }
+
+
+
+    archivo.close() ;
+
+}
+
+void MainWindow::Cargar_partida_1jugador(){
+
+    GAME->nombre_jugador = ui->agregar_nombre->text() ;
+
+    QFile archivo_leer( "guardado.txt" ) ;
+
+    if( archivo_leer.open( QFile::ReadOnly | QFile::Text ) ){
+
+        QTextStream in( &archivo_leer ) ;
+
+
+
+        while( !in.atEnd() ){
+
+            QString linea = in.readLine();
+
+            QString comparacion ;
+
+            comparacion = linea.section(" " , 0 , 0 ) ;
+
+
+            if( comparacion == GAME->nombre_jugador.replace( " ", "_" ) ){
+
+                GAME->encontrado = true ;
+
+            }
+
+
+
+        }
+
+        archivo_leer.close() ;
+    }
+    else{
+
+        //msgBox diciendo que no hay archivo de partidas
+
+        msg_box = new QMessageBox ;
+
+        msg_box->setWindowIcon( QIcon( ":/Recursos/GWfighterslogo.png" ) ) ;
+
+        msg_box->setWindowTitle("ERROR") ;
+
+        msg_box->setText( "NO SE ENCONTRO ARCHIVO DE PARTIDAS GUARDADAS" ) ;
+
+        msg_box->exec() ;
+
+        delete msg_box ;
+
+    }
+
+}
+
+
+
 MainWindow::~MainWindow()
 {
     delete ui;
 
     delete  GAME ;
-
-    delete  escena_menu ;
 
     delete  music ;
 
@@ -158,7 +299,9 @@ void MainWindow::on_regresar_clicked(){
 
     ui->texto1->hide() ;
 
+    ui->new_partida_txt->hide() ;
 
+    ui->load_partida_txt->hide() ;
 
 
 
@@ -194,7 +337,7 @@ void MainWindow::on_Salir_clicked(){
 
         case QMessageBox::Cancel:
 
-            //No hace na en especial, solo quita el recuadro
+            delete msg_box ;
 
         break;
 
@@ -230,19 +373,27 @@ void MainWindow::on_nueva_partida_clicked(){
 
     ui->nueva_partida->hide() ;
 
-    ui->agregar_nombre->show() ;
+
 
     ui->cargar_partida->hide() ;
 
-    ui->aceptar->show() ;
 
-    ui->texto1->show() ;
+
+
 
     switch ( GAME->val_btn_presionado ){
 
         case 0:{        //1 jugador
 
+            ui->agregar_nombre->show() ;
 
+            ui->aceptar->show() ;
+
+            ui->texto1->show() ;
+
+            ui->new_partida_txt->show() ;
+
+            GAME->condicion_aceptar = true ;
 
         }break;
 
@@ -261,15 +412,24 @@ void MainWindow::on_cargar_partida_clicked(){
 
     efecto_boton_click->play() ;
 
+    ui->cargar_partida->hide() ;
 
+    ui->nueva_partida->hide() ;
 
-    ui->aceptar->show() ;
 
     switch ( GAME->val_btn_presionado ){
 
         case 0:{        //1 jugador
 
+            ui->load_partida_txt->show() ;
 
+            ui->texto1->show() ;
+
+            ui->aceptar->show() ;
+
+            ui->agregar_nombre->show() ;
+
+            GAME->condicion_aceptar = false ;
 
         }break;
 
@@ -284,26 +444,7 @@ void MainWindow::on_cargar_partida_clicked(){
 
 }
 
-
-
-void MainWindow::on_aceptar_clicked(){
-
-    efecto_boton_click->play() ;
-
-    GAME->nombre_jugador = ui->agregar_nombre->text() ;
-
-    QFile archivo( "guardado.txt" ) ;           //meter todo esto en una funcion!!!
-
-    archivo.open( QIODevice::WriteOnly | QIODevice::Text) ; //el archivo sobre escribe (cambiar)
-
-    QTextStream out( &archivo );
-
-    out << GAME->nombre_jugador << " N:" << GAME->nivel_jugador << " P:" << GAME->puntos_jugador << ";" ;
-
-    out << "\n" ;
-
-
-    archivo.close() ;
+void MainWindow::set_interfaz_1(){
 
     ui->agregar_nombre->hide() ;
 
@@ -312,6 +453,86 @@ void MainWindow::on_aceptar_clicked(){
     ui->texto1->hide() ;
 
     ui->regresar->hide() ;
+
+    music->stop() ;
+
+    msc_2->play() ;
+
+    ui->graphicsView->setBackgroundBrush( Qt::black ) ;
+
+    ui->new_partida_txt->hide() ;
+
+    ui->load_partida_txt->hide() ;
+
+}
+
+
+
+void MainWindow::on_aceptar_clicked(){
+
+    efecto_boton_click->play() ;
+
+
+
+
+    if( GAME->condicion_aceptar ){
+
+
+        Guardar_nuevo_jugador() ;
+
+        if( GAME->existente_name ){
+
+            set_interfaz_1() ;
+
+            nivel_1() ;
+        }
+
+    }
+    else{
+
+
+            Cargar_partida_1jugador() ;
+
+            if( GAME->encontrado ){
+
+                set_interfaz_1() ;
+
+            }
+            else{
+
+                msg_box = new QMessageBox ;
+
+                msg_box->setWindowIcon( QIcon( ":/Recursos/GWfighterslogo.png" ) ) ;
+
+                msg_box->setWindowTitle("NO ENCONTRADO") ;
+
+                msg_box->setText( "El Nombre Ingresado (" + GAME->nombre_jugador + ") NO Existe..."  ) ;
+
+                msg_box->exec() ;
+
+                delete msg_box ;
+
+
+            }
+
+
+    }
+
+
+}
+
+
+
+void MainWindow::nivel_1(){
+
+    ui->fondo_L1->setGeometry( 0 , 0 , GAME->tam_X , GAME->tam_Y ) ;
+
+    nivel_1_fondo = new QMovie( ":/Recursos/mountains.gif" ) ;
+
+    ui->fondo_L1->setMovie( nivel_1_fondo ) ;
+
+    nivel_1_fondo->start() ;
+
 
 
 }

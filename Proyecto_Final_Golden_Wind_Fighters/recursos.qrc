@@ -4,7 +4,6 @@
         <file>Recursos/GWfighterslogo.png</file>
         <file>Recursos/mistaplane.png</file>
         <file>Recursos/giornos-theme.mp3</file>
-        <file>Recursos/bit-vrc6-jojos-bizarre-adventure-golden-wind.mp3</file>
         <file>Recursos/Fondo-Menu.jpg</file>
         <file>Recursos/btn_1player.png</file>
         <file>Recursos/btn_back.png</file>
@@ -16,5 +15,11 @@
         <file>Recursos/btn_npartida.png</file>
         <file>Recursos/btn_aceptar.png</file>
         <file>Recursos/txt_pregunta.png</file>
+        <file>Recursos/Fighting_Gold.mp3</file>
+        <file>Recursos/infierno.gif</file>
+        <file>Recursos/load_partida.png</file>
+        <file>Recursos/new_partida.png</file>
+        <file>Recursos/mountains.gif</file>
+        <file>Recursos/bcc_trns.png</file>
     </qresource>
 </RCC>

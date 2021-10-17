@@ -5,11 +5,13 @@
 #include <QGraphicsScene>
 #include <QIcon>
 #include "juego.h"
+#include "jugador_1.h"
 #include <QDebug>
 #include <QMediaPlayer>
 #include <QSoundEffect>
 #include <QMessageBox>
 #include <QFile>
+#include <QMovie>
 
 
 
@@ -27,6 +29,12 @@ public:
 
     void setMenu();     //Atributo para mostrar el menu
 
+    void Guardar_nuevo_jugador() ;
+
+    void Cargar_partida_1jugador() ;
+
+    void nivel_1() ;
+
     ~MainWindow();
 
 private slots:
@@ -43,6 +51,8 @@ private slots:
 
     void on_cargar_partida_clicked();
 
+    void set_interfaz_1() ;
+
 
     void on_aceptar_clicked();
 
@@ -52,15 +62,15 @@ private:
 
     juego *GAME ;
 
-    QGraphicsScene *escena_menu ;
-
-    QMediaPlayer *music ;
+    QMediaPlayer *music , *msc_2 ;
 
     QSoundEffect *efecto_boton_click ;
 
     QMessageBox * msg_box ;
 
+    QMovie *nivel_1_fondo ;
 
+    QGraphicsScene *escena_level ;
 
 };
 #endif // MAINWINDOW_H
