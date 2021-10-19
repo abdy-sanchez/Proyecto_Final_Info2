@@ -6,12 +6,13 @@
 #include <QIcon>
 #include "juego.h"
 #include "jugador_1.h"
+#include "fondo_niveles.h"
 #include <QDebug>
 #include <QMediaPlayer>
 #include <QSoundEffect>
 #include <QMessageBox>
 #include <QFile>
-#include <QMovie>
+#include <time.h>
 
 
 
@@ -27,18 +28,18 @@ public:
 
     MainWindow(QWidget *parent = nullptr);
 
-    void setMenu();     //Atributo para mostrar el menu
+    void setMenu();     //Metodo para mostrar el menu
 
-    void Guardar_nuevo_jugador() ;
+    void Guardar_nuevo_jugador() ;  //Funcion que guarda el nuevo jugador ingresado
 
-    void Cargar_partida_1jugador() ;
+    void Cargar_partida_1jugador() ;        //Funcion que lee el archivo de guardado
 
-    void nivel_1() ;
+    void nivel_1() ;        //Configuracion para el nivel 1 del juego
 
     ~MainWindow();
 
 private slots:
-
+                                    //Slots de los botones de la interfaz
     void on_Jugar_clicked();
 
     void on_regresar_clicked();
@@ -53,24 +54,19 @@ private slots:
 
     void set_interfaz_1() ;
 
-
     void on_aceptar_clicked();
 
 private:
 
     Ui::MainWindow *ui;
 
-    juego *GAME ;
+    juego *GAME ;   //Puntero al Juego principal
 
-    QMediaPlayer *music , *msc_2 ;
+    QMediaPlayer *music , *msc_2 ;  //Punteros que almacenaran la musica del menu y cuando se esté jugando
 
-    QSoundEffect *efecto_boton_click ;
+    QSoundEffect *efecto_boton_click ;      //Puntero para loe efectos de sonido de click del menu
 
-    QMessageBox * msg_box ;
-
-    QMovie *nivel_1_fondo ;
-
-    QGraphicsScene *escena_level ;
+    QMessageBox * msg_box ;     //Puntero para crear los message box necesarios
 
 };
 #endif // MAINWINDOW_H

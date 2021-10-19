@@ -170,22 +170,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="fondo_L1">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>200</y>
-      <width>51</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="new_partida_txt">
     <property name="geometry">
      <rect>
@@ -221,6 +205,48 @@
      <string/>
     </property>
    </widget>
+   <widget class="QCheckBox" name="avn1">
+    <property name="geometry">
+     <rect>
+      <x>351</x>
+      <y>171</y>
+      <width>79</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Fixedsys</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>Avion 1</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroup</string>
+    </attribute>
+   </widget>
+   <widget class="QCheckBox" name="avn2">
+    <property name="geometry">
+     <rect>
+      <x>351</x>
+      <y>196</y>
+      <width>79</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Fixedsys</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>Avion 2</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroup</string>
+    </attribute>
+   </widget>
    <zorder>graphicsView</zorder>
    <zorder>Jugar</zorder>
    <zorder>Multijugador</zorder>
@@ -233,9 +259,13 @@
    <zorder>nueva_partida</zorder>
    <zorder>regresar</zorder>
    <zorder>texto1</zorder>
-   <zorder>fondo_L1</zorder>
+   <zorder>avn1</zorder>
+   <zorder>avn2</zorder>
   </widget>
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

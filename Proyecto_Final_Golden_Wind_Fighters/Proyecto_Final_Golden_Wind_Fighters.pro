@@ -10,12 +10,14 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    fondo_niveles.cpp \
     juego.cpp \
     jugador_1.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    fondo_niveles.h \
     juego.h \
     jugador_1.h \
     mainwindow.h

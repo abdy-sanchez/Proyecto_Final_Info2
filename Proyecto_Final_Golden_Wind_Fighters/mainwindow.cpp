@@ -9,10 +9,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowIcon( QIcon( ":/Recursos/GWfighterslogo.png" ) ) ;        //Icono de la ventana
 
-    GAME = new juego ;
+    GAME = new juego ;      //Creamos un objeto tipo juego
 
-    setMenu();
+    setMenu();      //Ejecutamos la funcion que configura el menu
 
+    srand(time(NULL)) ;     //Para poder generar un num aleatorio
 }
 
 void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el menu del juego
@@ -30,7 +31,9 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
 
     ui->graphicsView->setGeometry( 0, 0 , GAME->tam_X + 2 , GAME->tam_Y + 2 ) ;
 
-    ui->graphicsView->setScene( GAME->menu );
+    ui->graphicsView->setScene( GAME->menu );       //Añadimos la escena menu a la pantalla
+
+
 
 
 
@@ -47,17 +50,31 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
 
     ui->cargar_partida->setGeometry( (GAME->tam_X/2)-(GAME->btx/2) , ((GAME->tam_Y + 3*(GAME->bty))/2)-(GAME->bty/2) , GAME->btx , GAME->bty ) ;
 
-        //Boton Regresar
+
+
+
+
+            //Boton Regresar
 
     ui->regresar->setGeometry( 20 , (GAME->tam_Y) - 70 , 50 , 50 ) ;
 
     ui->regresar->hide() ;
 
-        //Botonos cargar y nueva partida
+
+
+
+
+
+            //Botonos cargar y nueva partida
 
     ui->nueva_partida->hide() ;
 
     ui->cargar_partida->hide() ;
+
+
+
+
+
 
 
         //Linea para Ingresar el nombre
@@ -66,11 +83,18 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
 
     ui->agregar_nombre->hide() ;
 
+
+
+
+
         //Boton aceptar
 
     ui->aceptar->setGeometry( (GAME->tam_X/2)-(GAME->btx/2) , ((GAME->tam_Y + 9*(GAME->bty))/2)-(GAME->bty/2) , GAME->btx , GAME->bty );
 
     ui->aceptar->hide() ;
+
+
+
 
 
         //texto pregunta, nueva partida, cargar partida
@@ -87,15 +111,22 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
 
     ui->load_partida_txt->hide() ;
 
+
+
+
+
         //Configuracion de la musica de menu
 
     music = new QMediaPlayer() ;
 
     music->setMedia( QUrl("qrc:/Recursos/giornos-theme.mp3") ) ;
 
-    music->setVolume(30) ;
+    music->setVolume(30) ;      //Definimos el nivel del volumen de la musica
 
     music->play() ;
+
+
+
 
 
         //Configuracion de la musica del juego
@@ -107,30 +138,69 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
     msc_2->setVolume( 10 ) ;
 
 
-        //Vonfiguracion sonido de lso botones
+
+
+
+        //Configuracion sonido de los botones del menu
 
     efecto_boton_click = new QSoundEffect ;
 
     efecto_boton_click->setSource( QUrl("qrc:/Recursos/hit-01.wav") );
 
-    efecto_boton_click->setVolume( 0.20f ) ;
+    efecto_boton_click->setVolume( 0.20f ) ;    //Definimos el nivel del volumen del efecto de sonido
+
+
+        //configuracion botones seleccion avion
+
+    ui->buttonGroup->setId( ui->avn1 , 1 ) ;        //Definimos un ID para identificar los botones de seleccion del avion
+    ui->buttonGroup->setId( ui->avn2 , 2 ) ;
+
+    ui->avn1->hide() ;
+    ui->avn2->hide() ;
+
+    ui->avn1->setGeometry( 470 , 322 , 80 , 20 ) ;
+    ui->avn2->setGeometry( 470 , 338 , 80 , 20 ) ;
 
 
 }
 
 void MainWindow::Guardar_nuevo_jugador(){
 
+        //Condiciones para elegir el avion
 
-    GAME->nombre_jugador = ui->agregar_nombre->text() ;
+    if( ui->buttonGroup->button( 1 )->isChecked() ){        //Se revisa Qué Avion se elegió
+
+       GAME->select_plane = 1 ;
+
+    }else if( ui->buttonGroup->button( 2 )->isChecked() ){
+
+       GAME->select_plane = 2 ;
+    }
+    else{
+
+       GAME->select_plane = 1 ;     //Por defecto, pone el 1er avion
+    }
+
+
+
+    GAME->nombre_jugador = ui->agregar_nombre->text() ;     //Obtenemos el texto Ingresado por el usuario
+
+    if( GAME->nombre_jugador == "" ){
+
+       int random_num = rand()%1000 ;      //Si NO se ingreso un nombre, se pone Random# y un numero aleatorio
+
+       GAME->nombre_jugador = "Random#" + QString::number( random_num , 10 ) ;
+
+    }
 
     QFile archivo( "guardado.txt" ) ;
 
-    archivo.open( QFile::Append | QFile::Text) ;
+    archivo.open( QFile::Append | QFile::Text) ;        //Se abre o Crea el archivo donde se almacenará la informacion del jugador
 
     QTextStream out( &archivo );
 
 
-    QFile arch_2( "guardado.txt" ) ;
+    QFile arch_2( "guardado.txt" ) ;        //Tambien se abre el msimo archivo y se revisa que el nombre ingresado no exista
 
     GAME->existente_name = true ;
 
@@ -147,7 +217,7 @@ void MainWindow::Guardar_nuevo_jugador(){
             comparacion = linea.section(" " , 0 , 0 ) ;
 
 
-            if( comparacion == GAME->nombre_jugador.replace( " ", "_" ) ){
+            if( comparacion == GAME->nombre_jugador.replace( " ", "_" ) ){      //Se comparan los nombres existentes con el ingresado
 
                     GAME->existente_name = false ;
             }
@@ -159,10 +229,10 @@ void MainWindow::Guardar_nuevo_jugador(){
     }//fin if arch2
 
 
-    if( GAME->existente_name ){
+    if( GAME->existente_name ){     //Si el nombre no existe anteriormente, es creado y guardado
 
 
-        out << GAME->nombre_jugador.replace( " ", "_" ) << " N:" << GAME->nivel_jugador << " P:" << GAME->puntos_jugador << ";" ;
+        out << GAME->nombre_jugador.replace( " ", "_" ) << " Avn:" << GAME->select_plane << " N:" << GAME->nivel_jugador << " P:" << GAME->puntos_jugador << ";" ;
 
         out << "\n" ;
 
@@ -175,7 +245,7 @@ void MainWindow::Guardar_nuevo_jugador(){
 
         msg_box->setWindowTitle("ERROR") ;
 
-        msg_box->setText( "El Nombre (" + GAME->nombre_jugador + ") Ya Existe..." ) ;
+        msg_box->setText( "El Nombre (" + GAME->nombre_jugador.replace("_"," ") + ") Ya Existe..." ) ;
 
         msg_box->exec() ;
 
@@ -194,7 +264,7 @@ void MainWindow::Cargar_partida_1jugador(){
 
     QFile archivo_leer( "guardado.txt" ) ;
 
-    if( archivo_leer.open( QFile::ReadOnly | QFile::Text ) ){
+    if( archivo_leer.open( QFile::ReadOnly | QFile::Text ) ){       //Se abre el archivo en busca de la coincidencia con el nombre ingresado
 
         QTextStream in( &archivo_leer ) ;
 
@@ -243,7 +313,7 @@ void MainWindow::Cargar_partida_1jugador(){
 
 
 
-MainWindow::~MainWindow()
+MainWindow::~MainWindow()       //Se eliminan lo punteros de la memoria al cerrar el programa
 {
     delete ui;
 
@@ -253,10 +323,14 @@ MainWindow::~MainWindow()
 
     delete efecto_boton_click ;
 
+    delete  msc_2 ;
+
+    delete msg_box ;
+
 }
 
 
-void MainWindow::on_Jugar_clicked(){
+void MainWindow::on_Jugar_clicked(){        //Al presionar el boton de 1 jugador
 
     efecto_boton_click->play() ;
 
@@ -272,12 +346,14 @@ void MainWindow::on_Jugar_clicked(){
 
     ui->cargar_partida->show() ;
 
-    GAME->val_btn_presionado = 0 ;
+    GAME->val_btn_presionado = 0 ;      //Se asigana 0 a la variable
 
 
 }
 
-void MainWindow::on_regresar_clicked(){
+void MainWindow::on_regresar_clicked(){     //Al presionar el boton de regresar
+
+
 
     efecto_boton_click->play() ;
 
@@ -303,17 +379,24 @@ void MainWindow::on_regresar_clicked(){
 
     ui->load_partida_txt->hide() ;
 
+    ui->avn1->hide() ;
+
+    ui->avn2->hide() ;
+
 
 
 }
 
-void MainWindow::on_Salir_clicked(){
+void MainWindow::on_Salir_clicked(){        //Al presionar el boton de salir
+
 
     efecto_boton_click->play() ;
 
     msg_box = new QMessageBox ;
 
+
         //Configuracion basica del recuadro de salida
+
 
     msg_box->setWindowIcon( QIcon( ":/Recursos/GWfighterslogo.png" ) ) ;
 
@@ -346,7 +429,7 @@ void MainWindow::on_Salir_clicked(){
 
 }
 
-void MainWindow::on_Multijugador_clicked(){
+void MainWindow::on_Multijugador_clicked(){         //Al presionar el boton de multi jugador
 
     efecto_boton_click->play() ;
 
@@ -362,26 +445,22 @@ void MainWindow::on_Multijugador_clicked(){
 
     ui->cargar_partida->show() ;
 
-    GAME->val_btn_presionado = 1 ;
+    GAME->val_btn_presionado = 1 ;      //Se le asigana 1 a la variable
 
 
 }
 
-void MainWindow::on_nueva_partida_clicked(){
+void MainWindow::on_nueva_partida_clicked(){        //Al presionar el boton de nueva partida
 
     efecto_boton_click->play() ;
 
     ui->nueva_partida->hide() ;
 
-
-
     ui->cargar_partida->hide() ;
 
 
 
-
-
-    switch ( GAME->val_btn_presionado ){
+    switch ( GAME->val_btn_presionado ){        //Se revisa qué valor tiene la variable
 
         case 0:{        //1 jugador
 
@@ -392,6 +471,10 @@ void MainWindow::on_nueva_partida_clicked(){
             ui->texto1->show() ;
 
             ui->new_partida_txt->show() ;
+
+            ui->avn1->show() ;
+
+            ui->avn2->show() ;
 
             GAME->condicion_aceptar = true ;
 
@@ -408,7 +491,7 @@ void MainWindow::on_nueva_partida_clicked(){
 
 }
 
-void MainWindow::on_cargar_partida_clicked(){
+void MainWindow::on_cargar_partida_clicked(){       //Al presionar el boton de cargar partida
 
     efecto_boton_click->play() ;
 
@@ -444,7 +527,7 @@ void MainWindow::on_cargar_partida_clicked(){
 
 }
 
-void MainWindow::set_interfaz_1(){
+void MainWindow::set_interfaz_1(){      //Funcion que se ejecuta cuando el jueva va a comenzar (Esconde botones y demas)
 
     ui->agregar_nombre->hide() ;
 
@@ -464,15 +547,18 @@ void MainWindow::set_interfaz_1(){
 
     ui->load_partida_txt->hide() ;
 
+    ui->avn1->hide() ;
+
+    ui->avn2->hide() ;
+
 }
 
 
 
-void MainWindow::on_aceptar_clicked(){
+void MainWindow::on_aceptar_clicked(){      //Al presionar el boton de aceptar
+
 
     efecto_boton_click->play() ;
-
-
 
 
     if( GAME->condicion_aceptar ){
@@ -480,7 +566,7 @@ void MainWindow::on_aceptar_clicked(){
 
         Guardar_nuevo_jugador() ;
 
-        if( GAME->existente_name ){
+        if( GAME->existente_name ){     //Si se cumplen las condicones, el juego comienza en el nivel 1
 
             set_interfaz_1() ;
 
@@ -493,7 +579,7 @@ void MainWindow::on_aceptar_clicked(){
 
             Cargar_partida_1jugador() ;
 
-            if( GAME->encontrado ){
+            if( GAME->encontrado ){     //Si se cumplen las condiciones, se cargará la partida correspondiente
 
                 set_interfaz_1() ;
 
@@ -506,7 +592,7 @@ void MainWindow::on_aceptar_clicked(){
 
                 msg_box->setWindowTitle("NO ENCONTRADO") ;
 
-                msg_box->setText( "El Nombre Ingresado (" + GAME->nombre_jugador + ") NO Existe..."  ) ;
+                msg_box->setText( "El Nombre Ingresado (" + GAME->nombre_jugador.replace("_"," ") + ") NO Existe..."  ) ;
 
                 msg_box->exec() ;
 
@@ -523,16 +609,14 @@ void MainWindow::on_aceptar_clicked(){
 
 
 
-void MainWindow::nivel_1(){
+void MainWindow::nivel_1(){     //Funcion para el nivel 1
 
-    ui->fondo_L1->setGeometry( 0 , 0 , GAME->tam_X , GAME->tam_Y ) ;
 
-    nivel_1_fondo = new QMovie( ":/Recursos/mountains.gif" ) ;
+    GAME->set_level_one() ;
 
-    ui->fondo_L1->setMovie( nivel_1_fondo ) ;
+    ui->graphicsView->setScene( GAME->level_one );
 
-    nivel_1_fondo->start() ;
-
+    delete  GAME->menu ;
 
 
 }
