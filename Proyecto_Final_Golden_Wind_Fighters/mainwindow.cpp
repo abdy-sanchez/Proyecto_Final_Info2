@@ -607,6 +607,16 @@ void MainWindow::on_aceptar_clicked(){      //Al presionar el boton de aceptar
 
 }
 
+void MainWindow::perdiste(){
+
+    if( GAME->Fin_partida ){
+
+        msc_2->stop() ;
+
+    }
+
+}
+
 
 
 void MainWindow::nivel_1(){     //Funcion para el nivel 1
@@ -615,6 +625,12 @@ void MainWindow::nivel_1(){     //Funcion para el nivel 1
     GAME->set_level_one() ;
 
     ui->graphicsView->setScene( GAME->level_one );
+
+    end_game = new QTimer() ;
+
+    connect( end_game , SIGNAL( timeout() ) , this , SLOT( perdiste() ) ) ;
+
+    end_game->start( 10 ) ;
 
     delete  GAME->menu ;
 

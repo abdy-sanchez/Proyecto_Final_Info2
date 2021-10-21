@@ -10,6 +10,8 @@ class Fondo_niveles: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 
+    friend class juego ;
+
 public:
 
     Fondo_niveles( int n_level );       //Constructor para los fondos de cada nivel

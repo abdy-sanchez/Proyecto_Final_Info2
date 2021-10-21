@@ -42,12 +42,34 @@ void juego::set_level_one(){
 
     Main_player->set_imagen_jugador( select_plane ) ;
 
-    Main_player->setX( 38 ) ;
+    Main_player->setX( 130 ) ;      //130
 
     Main_player->setY( 240 ) ;
 
     level_one->addItem( Main_player ) ;     //Añadimos al personaje principal con su respectivo sprite y animacion
 
+        //Timer del GAME OVER
+
+    Revisar_game_over = new QTimer() ;
+
+    connect( Revisar_game_over , SIGNAL( timeout() ) , this , SLOT( Fin_del_Juego() ) ) ;
+
+    Revisar_game_over->start( 10 ) ;
+
+}
+
+void juego::Fin_del_Juego(){
+
+
+    if( Main_player->GAME_OVER ){
+
+        backg_screen->cambiar_frame->stop() ;
+
+        Revisar_game_over->stop() ;
+
+        Fin_partida = true ;
+
+    }
 
 }
 

@@ -5,6 +5,7 @@
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 #include <QTimer>
+#include <QDebug>
 
 class Jugador_1: public QObject, public QGraphicsPixmapItem
 {
@@ -18,15 +19,26 @@ public:
 
     int frame = 0 , num_plane ;     //Variables utiles para la animacion del avion
 
+    int vel_0y = 1 , vel_0x = 2 , G = 1 , pos_0x , pos_0y , T = 50  ;
+
+    bool GAME_OVER = false ;
+
+
+    unsigned long long n = 0 ;
+
 public slots:
 
     void animacion_sprite() ;       //Slot para la animacion del avion
+
+    void caida_libre_avion() ;
 
 private:
 
     QPixmap sprite_jugador , sprite_actual ;        //Aqui se guardan los sprites del avion
 
-    QTimer *animacion ;     //Timer para la animacion del avion
+    QTimer *animacion, *caida_libre ;     //Timer para la animacion del avion
+
+
 
 };
 

@@ -56,6 +56,8 @@ private slots:
 
     void on_aceptar_clicked();
 
+    void perdiste() ;
+
 private:
 
     Ui::MainWindow *ui;
@@ -67,6 +69,8 @@ private:
     QSoundEffect *efecto_boton_click ;      //Puntero para loe efectos de sonido de click del menu
 
     QMessageBox * msg_box ;     //Puntero para crear los message box necesarios
+
+    QTimer *end_game ;
 
 };
 #endif // MAINWINDOW_H

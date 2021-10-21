@@ -28,6 +28,12 @@ Jugador_1::Jugador_1( int n ){
 
     animacion->start( 60 ) ;    //iniciamos el timer para la animacion del avion
 
+    caida_libre = new QTimer() ;
+
+    connect( caida_libre , SIGNAL( timeout() ) , this , SLOT( caida_libre_avion() ) ) ;
+
+    caida_libre->start( T ) ;
+
 
 }
 
@@ -66,5 +72,42 @@ void Jugador_1::animacion_sprite(){
     }
 
     set_imagen_jugador( num_plane ) ;
+
+}
+
+void Jugador_1::caida_libre_avion(){
+
+    float x , y ;
+
+    pos_0x = this->x() ;
+
+    pos_0y = this->y() ;
+
+    x = pos_0x - vel_0x*n*( 0.001*T ) ;
+
+    y =  pos_0y + vel_0y*n*( 0.001*T ) - 0.5*G*n*( 0.001*T )*( 0.001*T ) ;
+
+    this->setPos( int( x ) , int( y ) ) ;
+
+    n++ ;
+
+    int condicion_GAME_OVER1  = this->x() + 40 ;
+
+    int condicion_GAME_OVER2  = this->y() ;
+
+
+    if( condicion_GAME_OVER1 < 0 || condicion_GAME_OVER2 > 468 ){
+
+        qDebug() << "GAME OVER" ;
+
+        caida_libre->stop() ;
+
+        animacion->stop() ;
+
+        GAME_OVER = true ;
+
+
+    }
+
 
 }
