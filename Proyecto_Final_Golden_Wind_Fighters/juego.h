@@ -39,7 +39,7 @@ private:
 
     QString nombre_jugador ;        //Qstring que contenfrá el nombre del jugador
 
-    bool condicion_aceptar = true , encontrado = false , existente_name = true , Fin_partida = false ;    //Variables utiles para el manejo del menu
+    bool condicion_aceptar = true , encontrado = false , existente_name = true , Fin_partida = false , tecleable = false ;    //Variables utiles para el manejo del menu
 
     Jugador_1 *Main_player ;    //Puntero para el objeto jugador
 

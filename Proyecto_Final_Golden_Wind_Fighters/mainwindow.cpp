@@ -112,6 +112,13 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
     ui->load_partida_txt->hide() ;
 
 
+        //Texto GAME OVER
+
+    ui->Game_final->setGeometry( 135 , 100 , 500 , 150 ) ;
+
+    ui->Game_final->hide() ;
+
+
 
 
 
@@ -613,6 +620,15 @@ void MainWindow::perdiste(){
 
         msc_2->stop() ;
 
+        ui->Game_final->show() ;
+
+        ui->Salir->show() ;
+
+        GAME->tecleable = false ;
+
+        end_game->stop() ;
+
+
     }
 
 }
@@ -632,7 +648,55 @@ void MainWindow::nivel_1(){     //Funcion para el nivel 1
 
     end_game->start( 10 ) ;
 
+    GAME->tecleable = true ;
+
     delete  GAME->menu ;
 
+
+}
+
+
+        //Funcion para resivir las teclas presionadas
+
+
+
+void MainWindow::keyPressEvent( QKeyEvent *teclas ){
+
+
+    if( GAME->tecleable ){       //Condicion principal para teclear
+
+
+
+        if( teclas->key() == Qt::Key_W ){                   //Arriba
+
+            GAME->Main_player->movimientos_personaje( 0 ) ;
+        }
+        else if( teclas->key() == Qt::Key_S ){                  //Abajo
+
+            GAME->Main_player->movimientos_personaje( 1 ) ;
+        }
+        else if( teclas->key() == Qt::Key_A ){                      //Izquierda
+
+            GAME->Main_player->movimientos_personaje( 2 ) ;
+        }
+        else if( teclas->key() == Qt::Key_D ){                      //Derecha
+
+            GAME->Main_player->movimientos_personaje( 3 ) ;
+        }
+        else if( teclas->key() == Qt::Key_E ){                  //Diagonal derecha - arriba
+
+            GAME->Main_player->movimientos_personaje( 4 ) ;
+        }
+        else if( teclas->key() == Qt::Key_Q ){                      //Diagonal izquierda - Abajo
+
+            GAME->Main_player->movimientos_personaje( 5 ) ;
+
+        }
+        else if( teclas->key() == Qt::Key_Space ){          //Disparar
+
+            qDebug() << "Disparo" ;
+        }
+
+    }//fin condicion
 
 }

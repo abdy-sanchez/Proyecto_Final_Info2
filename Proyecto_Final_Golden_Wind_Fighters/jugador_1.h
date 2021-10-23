@@ -17,7 +17,7 @@ public:
 
     void set_imagen_jugador( int n );   //Funcion para setear las diferentes imagenes del avion
 
-    int frame = 0 , num_plane ;     //Variables utiles para la animacion del avion
+    int frame = 0 , num_plane, tam_x_plane ;     //Variables utiles para la animacion del avion
 
     int vel_0y = 1 , vel_0x = 2 , G = 1 , pos_0x , pos_0y , T = 50  ;
 
@@ -31,6 +31,8 @@ public slots:
     void animacion_sprite() ;       //Slot para la animacion del avion
 
     void caida_libre_avion() ;
+
+    void movimientos_personaje( int num );
 
 private:
 

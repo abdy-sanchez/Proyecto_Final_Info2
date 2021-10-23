@@ -21,5 +21,6 @@
         <file>Recursos/stage1.png</file>
         <file>Recursos/avn_p1.png</file>
         <file>Recursos/newStage2.png</file>
+        <file>Recursos/game_over.png</file>
     </qresource>
 </RCC>

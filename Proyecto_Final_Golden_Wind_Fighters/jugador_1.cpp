@@ -43,6 +43,8 @@ void Jugador_1::set_imagen_jugador( int n ){
 
         case 1:{
 
+            tam_x_plane = 80 ;
+
             sprite_actual = sprite_jugador.copy( 80*frame , 0 , 80 , 48 ) ;
 
             setPixmap( sprite_actual.scaled( 80 , 48 ) ) ;
@@ -50,6 +52,8 @@ void Jugador_1::set_imagen_jugador( int n ){
         }break;
 
         case 2:{
+
+            tam_x_plane = 64 ;
 
             sprite_actual = sprite_jugador.copy( 64*frame , 0 , 64 , 48 ) ;
 
@@ -106,6 +110,53 @@ void Jugador_1::caida_libre_avion(){
 
         GAME_OVER = true ;
 
+
+    }
+
+
+}
+
+void Jugador_1::movimientos_personaje( int num ){
+
+    pos_0x = this->x() ;
+
+    pos_0y = this->y() ;
+
+    bool cond1 = pos_0y - 5 > 0 ;
+
+    bool cond2 = (pos_0x + tam_x_plane ) + 5 < 800 ;
+
+    if( cond1 && cond2 ){       //Condiciones para los boredes derecho y superior de la pantalla
+
+
+            if( num == 0 ){       //arriba
+
+
+              this->setPos( pos_0x , pos_0y - 5 ) ;
+
+            }
+            else if( num == 1 ){      //abajo
+
+                 this->setPos( pos_0x , pos_0y + 5 ) ;
+            }
+            else if( num == 2 ){      //izquierda
+
+                 this->setPos( pos_0x - 5 , pos_0y ) ;
+            }
+            else if( num == 3 ){          //derecha
+
+                 this->setPos( pos_0x + 5 , pos_0y ) ;
+            }
+            else if( num == 4 ){        //diagonal derecha - arriba
+
+                this->setPos( pos_0x + 5 , pos_0y - 5 ) ;
+            }
+            else if( num == 5 ){        //diagonal abajo - izq
+
+                this->setPos( pos_0x - 5 , pos_0y + 5 ) ;
+            }
+
+            n = 0 ;
 
     }
 
