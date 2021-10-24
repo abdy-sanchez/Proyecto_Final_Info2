@@ -56,6 +56,23 @@ void juego::set_level_one(){
 
     Revisar_game_over->start( 10 ) ;
 
+
+}
+
+void juego::disparar(){
+
+    int px , py ;
+
+    px = Main_player->x() + 50 ;
+
+    py = Main_player->y() + 39 ;
+
+    disparo = new proyectil ;
+
+    disparo->setPos( px , py ) ;
+
+    level_one->addItem( disparo ) ;
+
 }
 
 void juego::Fin_del_Juego(){
@@ -65,11 +82,12 @@ void juego::Fin_del_Juego(){
 
         backg_screen->cambiar_frame->stop() ;
 
-        Revisar_game_over->stop() ;
-
         Fin_partida = true ;
+
+        Revisar_game_over->stop() ;
 
     }
 
 }
+
 

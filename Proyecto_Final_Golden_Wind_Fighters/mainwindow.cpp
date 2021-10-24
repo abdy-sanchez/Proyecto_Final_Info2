@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     setMenu();      //Ejecutamos la funcion que configura el menu
 
     srand(time(NULL)) ;     //Para poder generar un num aleatorio
+
 }
 
 void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el menu del juego
@@ -61,6 +62,18 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
     ui->regresar->hide() ;
 
 
+            //Boton instrucciones
+
+    ui->instrucciones->setGeometry( 20 , (GAME->tam_Y) - 70 , 50 , 50 ) ;
+
+
+
+
+            //Texto Instrucciones
+
+    ui->texto_instrucciones->setGeometry( 190 , 190 , 400 , 250 ) ;
+
+    ui->texto_instrucciones->hide() ;
 
 
 
@@ -194,7 +207,7 @@ void MainWindow::Guardar_nuevo_jugador(){
 
     if( GAME->nombre_jugador == "" ){
 
-       int random_num = rand()%1000 ;      //Si NO se ingreso un nombre, se pone Random# y un numero aleatorio
+       int random_num = rand()%100000 ;      //Si NO se ingreso un nombre, se pone Random# y un numero aleatorio
 
        GAME->nombre_jugador = "Random#" + QString::number( random_num , 10 ) ;
 
@@ -355,6 +368,8 @@ void MainWindow::on_Jugar_clicked(){        //Al presionar el boton de 1 jugador
 
     GAME->val_btn_presionado = 0 ;      //Se asigana 0 a la variable
 
+    ui->instrucciones->hide() ;
+
 
 }
 
@@ -390,7 +405,9 @@ void MainWindow::on_regresar_clicked(){     //Al presionar el boton de regresar
 
     ui->avn2->hide() ;
 
+    ui->texto_instrucciones->hide() ;
 
+    ui->instrucciones->show() ;
 
 }
 
@@ -453,6 +470,8 @@ void MainWindow::on_Multijugador_clicked(){         //Al presionar el boton de m
     ui->cargar_partida->show() ;
 
     GAME->val_btn_presionado = 1 ;      //Se le asigana 1 a la variable
+
+    ui->instrucciones->hide() ;
 
 
 }
@@ -628,6 +647,8 @@ void MainWindow::perdiste(){
 
         end_game->stop() ;
 
+        timer_spawn_enemy->stop() ;
+
 
     }
 
@@ -649,6 +670,12 @@ void MainWindow::nivel_1(){     //Funcion para el nivel 1
     end_game->start( 10 ) ;
 
     GAME->tecleable = true ;
+
+    timer_spawn_enemy = new QTimer() ;
+
+    connect( timer_spawn_enemy , SIGNAL( timeout() ) , this , SLOT( spawn_enemigo() ) ) ;
+
+    timer_spawn_enemy->start( 2500 ) ;
 
     delete  GAME->menu ;
 
@@ -694,9 +721,58 @@ void MainWindow::keyPressEvent( QKeyEvent *teclas ){
         }
         else if( teclas->key() == Qt::Key_Space ){          //Disparar
 
-            qDebug() << "Disparo" ;
+            if( GAME->dis_paro ){
+
+                GAME->disparar() ;
+
+                GAME->dis_paro = false ;
+
+                QTimer::singleShot( 500 , this, SLOT( barra_press() ) );
+            }
+
         }
+
 
     }//fin condicion
 
+}
+
+
+void MainWindow::barra_press(){
+
+    GAME->dis_paro = true ;
+
+}
+
+
+void MainWindow::spawn_enemigo(){
+
+    int random_num1 = rand()%3 ;        //numero aleatorio entre 0 y 2
+
+    int random_num2 = rand()%410 ;
+
+    ENEmigos = new enemigos( random_num1 ) ;
+
+    ENEmigos->set_enemigo() ;
+
+    ENEmigos->setPos( 800 , random_num2 ) ;
+
+    GAME->level_one->addItem( ENEmigos ) ;
+
+
+}
+
+void MainWindow::on_instrucciones_clicked(){
+
+    ui->texto_instrucciones->show() ;
+
+    ui->instrucciones->hide() ;
+
+    ui->regresar->show() ;
+
+    ui->Jugar->hide() ;
+
+    ui->Multijugador->hide() ;
+
+    ui->Salir->hide() ;
 }

@@ -22,5 +22,11 @@
         <file>Recursos/avn_p1.png</file>
         <file>Recursos/newStage2.png</file>
         <file>Recursos/game_over.png</file>
+        <file>Recursos/bullet.png</file>
+        <file>Recursos/New_enemigo_1.png</file>
+        <file>Recursos/new_enemigo_2.png</file>
+        <file>Recursos/new_enemigo_3.png</file>
+        <file>Recursos/btn_info.png</file>
+        <file>Recursos/instrucciones.png</file>
     </qresource>
 </RCC>

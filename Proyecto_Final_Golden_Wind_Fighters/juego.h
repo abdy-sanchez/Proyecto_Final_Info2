@@ -6,6 +6,8 @@
 #include <QGraphicsScene>
 #include "jugador_1.h"
 #include "fondo_niveles.h"
+#include "proyectil.h"
+#include "enemigos.h"
 
 class juego: public QObject
 {
@@ -21,6 +23,8 @@ public:
     void escena_Menu();     //Funcion para configurar la escena del menu
 
     void set_level_one() ;  //Funcion para configurar la escena del primer nivel
+
+    void disparar() ;
 
 public slots:
 
@@ -39,13 +43,15 @@ private:
 
     QString nombre_jugador ;        //Qstring que contenfrá el nombre del jugador
 
-    bool condicion_aceptar = true , encontrado = false , existente_name = true , Fin_partida = false , tecleable = false ;    //Variables utiles para el manejo del menu
+    bool condicion_aceptar = true , encontrado = false , existente_name = true , Fin_partida = false , tecleable = false , dis_paro = true ;    //Variables utiles para el manejo del menu
 
     Jugador_1 *Main_player ;    //Puntero para el objeto jugador
 
     Fondo_niveles *backg_screen ;   //Puntero para los diferentes escenarios de los 3 niveles
 
     QTimer *Revisar_game_over ;
+
+    proyectil *disparo ;
 
 };
 

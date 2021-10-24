@@ -7,6 +7,7 @@
 #include "juego.h"
 #include "jugador_1.h"
 #include "fondo_niveles.h"
+#include "enemigos.h"
 #include <QDebug>
 #include <QMediaPlayer>
 #include <QSoundEffect>
@@ -61,6 +62,12 @@ private slots:
 
     void perdiste() ;
 
+    void barra_press() ;
+
+    void spawn_enemigo() ;
+
+    void on_instrucciones_clicked();
+
 private:
 
     Ui::MainWindow *ui;
@@ -73,7 +80,9 @@ private:
 
     QMessageBox * msg_box ;     //Puntero para crear los message box necesarios
 
-    QTimer *end_game ;
+    QTimer *end_game , *timer_spawn_enemy ;
+
+    enemigos *ENEmigos ;
 
 };
 #endif // MAINWINDOW_H

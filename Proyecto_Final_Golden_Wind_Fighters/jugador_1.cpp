@@ -110,7 +110,6 @@ void Jugador_1::caida_libre_avion(){
 
         GAME_OVER = true ;
 
-
     }
 
 
