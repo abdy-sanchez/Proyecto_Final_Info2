@@ -1,13 +1,14 @@
 #include "enemigos.h"
 #include "proyectil.h"
+#include "puntaje.h"
 
-extern int puntos ;
+extern puntaje *Score ;
 
 enemigos::enemigos( int n_enemy ){
 
     if( n_enemy == 0 ){
 
-        sprites1.load(":/Recursos/New_enemigo_1.png") ;
+        sprites1.load(":/Recursos/New_enemigo_100.png") ;
 
         tX = 61 ;
 
@@ -17,7 +18,7 @@ enemigos::enemigos( int n_enemy ){
     }
     else if( n_enemy == 1 ){
 
-        sprites1.load(":/Recursos/new_enemigo_2.png") ;
+        sprites1.load(":/Recursos/new_enemigo_150.png") ;
 
         tX = 60 ;
 
@@ -27,7 +28,7 @@ enemigos::enemigos( int n_enemy ){
     }
     else if( n_enemy == 2 ){
 
-        sprites1.load(":/Recursos/new_enemigo_3.png") ;
+        sprites1.load(":/Recursos/new_enemigo_200.png") ;
 
         tX = 62 ;
 
@@ -40,7 +41,13 @@ enemigos::enemigos( int n_enemy ){
 
     connect( timer_enemy , SIGNAL( timeout() ) , this , SLOT( movimiento_enemigos() ) ) ;
 
-    timer_enemy->start( 30 ) ;
+    timer_enemy->start( T ) ;
+
+    explosion = new QSoundEffect ;
+
+    explosion->setSource( QUrl("qrc:/Recursos/explosion.wav") ) ;
+
+    explosion->setVolume( 0.20f ) ;
 
 }
 
@@ -76,9 +83,11 @@ void enemigos::movimiento_enemigos(){
     for( int i = 0 , nl = colisiones.size() ; i < nl ; i++ ){
 
 
-        if( typeid( *( colisiones[i] )  ) ==  typeid( proyectil ) ){
+        if( (typeid( *( colisiones[i] )  ) ==  typeid( proyectil )) && collide ){
 
-            puntos = puntos + 500 ;
+            Score->aumentar_puntaje( n ) ;
+
+            explosion->play() ;
 
             scene()->removeItem( colisiones[i] ) ;
 
@@ -87,6 +96,8 @@ void enemigos::movimiento_enemigos(){
             frame = 1 ;
 
             set_enemigo() ;
+
+            collide = false ;
 
             QTimer::singleShot( 800 , this, SLOT( muerte() ) );
 
@@ -103,7 +114,30 @@ void enemigos::movimiento_enemigos(){
 
     py = this->y() ;
 
-    setPos( px - 5 , py ) ;
+
+    if( n == 0 ){
+
+        setPos( px - 5 , py ) ;
+
+    }
+    else if( n == 1 ){
+
+
+        setPos( px - 8 , py ) ;
+
+    }
+    else if( n == 2 ){
+
+
+        double pos_y = 5*qSin( 4*t_disc*(0.001*T) ) ;
+
+        setPos( px - 5 , py + pos_y ) ;
+
+        t_disc++ ;
+
+    }
+
+
 
     int flag = this->x() + 62 ;
 

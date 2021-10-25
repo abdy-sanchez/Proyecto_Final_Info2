@@ -8,6 +8,8 @@
 #include <QDebug>
 #include <QGraphicsScene>
 #include <QList>
+#include <qmath.h>
+#include <QSoundEffect>
 
 class enemigos: public QObject, public QGraphicsPixmapItem
 {
@@ -31,11 +33,19 @@ private:
 
     QPixmap sprites1, enemy ;
 
-    int tX , tY , n ;
+    int tX , tY , n , T = 30 ;
+
+    unsigned long long t_disc = 0 ;
+
+    bool collide = true ;
 
     QTimer *timer_enemy ;
 
     QList<QGraphicsItem*> colisiones ;
+
+    QSoundEffect *explosion ;
+
+
 };
 
 #endif // ENEMIGOS_H

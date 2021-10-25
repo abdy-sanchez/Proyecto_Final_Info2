@@ -28,5 +28,12 @@
         <file>Recursos/new_enemigo_3.png</file>
         <file>Recursos/btn_info.png</file>
         <file>Recursos/instrucciones.png</file>
+        <file>Recursos/New_enemigo_100.png</file>
+        <file>Recursos/new_enemigo_150.png</file>
+        <file>Recursos/new_enemigo_200.png</file>
+        <file>Recursos/8-bit-game-over.wav</file>
+        <file>Recursos/explosion.wav</file>
+        <file>Recursos/gun-shot.wav</file>
+        <file>Recursos/Lose.wav</file>
     </qresource>
 </RCC>

@@ -16,7 +16,8 @@ SOURCES += \
     jugador_1.cpp \
     main.cpp \
     mainwindow.cpp \
-    proyectil.cpp
+    proyectil.cpp \
+    puntaje.cpp
 
 HEADERS += \
     enemigos.h \
@@ -24,7 +25,8 @@ HEADERS += \
     juego.h \
     jugador_1.h \
     mainwindow.h \
-    proyectil.h
+    proyectil.h \
+    puntaje.h
 
 FORMS += \
     mainwindow.ui

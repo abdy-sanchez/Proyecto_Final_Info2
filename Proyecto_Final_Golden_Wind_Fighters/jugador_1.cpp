@@ -1,4 +1,8 @@
 #include "jugador_1.h"
+#include "enemigos.h"
+#include "puntaje.h"
+
+extern puntaje *health ;
 
 Jugador_1::Jugador_1( int n ){
 
@@ -33,6 +37,12 @@ Jugador_1::Jugador_1( int n ){
     connect( caida_libre , SIGNAL( timeout() ) , this , SLOT( caida_libre_avion() ) ) ;
 
     caida_libre->start( T ) ;
+
+
+    perder_vida = new QSoundEffect ;
+
+    perder_vida->setSource( QUrl("qrc:/Recursos/Lose.wav") ) ;
+
 
 
 }
@@ -81,6 +91,40 @@ void Jugador_1::animacion_sprite(){
 
 void Jugador_1::caida_libre_avion(){
 
+        //Se revisan las colisones
+
+    colisiones = collidingItems() ;
+
+    for( int i = 0 , nl = colisiones.size() ; i < nl ; i++ ){
+
+
+        if( (typeid( *( colisiones[i] )  ) ==  typeid( enemigos )) && choque ){
+
+
+            choque = false ;
+
+            GAME_OVER = health->salud( 0 ) ;
+
+            perder_vida->play() ;
+
+            if( GAME_OVER ){
+
+                caida_libre->stop() ;
+
+                animacion->stop() ;
+            }
+            else{
+
+                QTimer::singleShot( 2500 , this, SLOT( tiempo_inmunidad() ) );
+            }
+
+        }
+
+
+    }
+
+        //Movimiento caida libre
+
     float x , y ;
 
     pos_0x = this->x() ;
@@ -110,12 +154,19 @@ void Jugador_1::caida_libre_avion(){
 
         GAME_OVER = true ;
 
+        vidas = 0 ;
+
+        health->salud( 1 );
+
     }
 
 
 }
 
 void Jugador_1::movimientos_personaje( int num ){
+
+
+        //Movimientos
 
     pos_0x = this->x() ;
 
@@ -157,7 +208,13 @@ void Jugador_1::movimientos_personaje( int num ){
 
             n = 0 ;
 
+
     }
 
 
+}
+
+void Jugador_1::tiempo_inmunidad(){
+
+    choque = true ;
 }

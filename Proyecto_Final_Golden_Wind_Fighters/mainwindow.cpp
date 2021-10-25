@@ -1,5 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "puntaje.h"
+
+extern puntaje *Score ;
+extern puntaje *player_name ;
+extern puntaje *health ;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -168,6 +173,23 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
     efecto_boton_click->setSource( QUrl("qrc:/Recursos/hit-01.wav") );
 
     efecto_boton_click->setVolume( 0.20f ) ;    //Definimos el nivel del volumen del efecto de sonido
+
+
+    gameO_efecto = new QSoundEffect ;
+
+    gameO_efecto->setSource( QUrl("qrc:/Recursos/8-bit-game-over.wav") );
+
+    gameO_efecto->setVolume( 0.40f ) ;
+
+
+        //Configuracion del sonido de disparo
+
+    sonido_disparo = new QSoundEffect ;
+
+    sonido_disparo->setSource( QUrl("qrc:/Recursos/gun-shot.wav") ) ;
+
+    sonido_disparo->setVolume( 0.20f ) ;
+
 
 
         //configuracion botones seleccion avion
@@ -639,6 +661,8 @@ void MainWindow::perdiste(){
 
         msc_2->stop() ;
 
+        gameO_efecto->play() ;
+
         ui->Game_final->show() ;
 
         ui->Salir->show() ;
@@ -648,6 +672,8 @@ void MainWindow::perdiste(){
         end_game->stop() ;
 
         timer_spawn_enemy->stop() ;
+
+        Guardar_progerso() ;
 
 
     }
@@ -678,6 +704,24 @@ void MainWindow::nivel_1(){     //Funcion para el nivel 1
     timer_spawn_enemy->start( 2500 ) ;
 
     delete  GAME->menu ;
+
+    Score = new puntaje() ;
+
+    player_name = new puntaje() ;
+
+    health = new puntaje() ;
+
+    health->salud( 1 ) ;
+
+    Score->aumentar_puntaje( 3 ) ;
+
+    player_name->whos_playing( GAME->nombre_jugador ) ;
+
+    GAME->level_one->addItem( Score ) ;
+
+    GAME->level_one->addItem( player_name ) ;
+
+    GAME->level_one->addItem( health ) ;
 
 
 }
@@ -725,6 +769,8 @@ void MainWindow::keyPressEvent( QKeyEvent *teclas ){
 
                 GAME->disparar() ;
 
+                sonido_disparo->play() ;
+
                 GAME->dis_paro = false ;
 
                 QTimer::singleShot( 500 , this, SLOT( barra_press() ) );
@@ -734,6 +780,68 @@ void MainWindow::keyPressEvent( QKeyEvent *teclas ){
 
 
     }//fin condicion
+
+}
+
+void MainWindow::Guardar_progerso(){
+
+    QFile archivo( "guardado.txt" ) ;
+
+    archivo.open( QFile::ReadOnly | QFile::Text ) ;
+
+    QTextStream in( &archivo ) ;
+
+    QString todo_el_archivo ;
+
+    while( !in.atEnd() ){
+
+        QString linea = in.readLine();
+
+        QString comparacion ;
+
+        comparacion = linea.section(" " , 0 , 0 ) ;
+
+        if( comparacion == GAME->nombre_jugador ){
+
+            QString reemplazo, avn , levl , points ;
+
+            avn = QString::number( GAME->select_plane ) ;
+
+            levl = QString::number( GAME->nivel_jugador ) ;
+
+            points = QString::number( puntos ) ;
+
+            reemplazo = GAME->nombre_jugador + " Avn:" + avn + " N:" + levl + " P:" + points + ";" + '\n' ;
+
+            todo_el_archivo.append( reemplazo ) ;
+
+        }
+        else{
+
+           linea.append( '\n' ) ;
+
+           todo_el_archivo.append( linea ) ;
+        }
+
+
+        archivo.close() ;
+
+
+
+        QFile archivo2( "guardado.txt" ) ;
+
+        archivo2.open( QFile::WriteOnly | QFile::Text ) ;
+
+        QTextStream out( &archivo2 );
+
+        out << todo_el_archivo ;
+
+        archivo2.close() ;
+
+    } //fin while
+
+
+
 
 }
 
@@ -755,7 +863,16 @@ void MainWindow::spawn_enemigo(){
 
     ENEmigos->set_enemigo() ;
 
-    ENEmigos->setPos( 800 , random_num2 ) ;
+    if( random_num1 == 2 ){
+
+       random_num2 = rand()%430 ;
+
+       ENEmigos->setPos( 800 , random_num2 ) ;
+    }
+    else{
+
+        ENEmigos->setPos( 800 , random_num2 ) ;
+    }
 
     GAME->level_one->addItem( ENEmigos ) ;
 
@@ -763,6 +880,8 @@ void MainWindow::spawn_enemigo(){
 }
 
 void MainWindow::on_instrucciones_clicked(){
+
+    efecto_boton_click->play() ;
 
     ui->texto_instrucciones->show() ;
 

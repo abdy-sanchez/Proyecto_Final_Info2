@@ -6,6 +6,8 @@
 #include <QPixmap>
 #include <QTimer>
 #include <QDebug>
+#include <QList>
+#include <QSoundEffect>
 
 class Jugador_1: public QObject, public QGraphicsPixmapItem
 {
@@ -21,7 +23,7 @@ public:
 
     int vel_0y = 1 , vel_0x = 2 , G = 1 , pos_0x , pos_0y , T = 50  ;
 
-    bool GAME_OVER = false ;
+    bool GAME_OVER = false , choque = true ;
 
 
     unsigned long long n = 0 ;
@@ -34,13 +36,17 @@ public slots:
 
     void movimientos_personaje( int num );
 
+    void tiempo_inmunidad() ;
+
 private:
 
     QPixmap sprite_jugador , sprite_actual ;        //Aqui se guardan los sprites del avion
 
     QTimer *animacion, *caida_libre ;     //Timer para la animacion del avion
 
+    QList<QGraphicsItem*> colisiones ;
 
+    QSoundEffect *perder_vida ;
 
 };
 

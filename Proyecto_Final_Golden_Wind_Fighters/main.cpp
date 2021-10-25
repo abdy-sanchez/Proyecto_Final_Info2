@@ -1,8 +1,14 @@
 #include "mainwindow.h"
+#include "puntaje.h"
 
 #include <QApplication>
 
-int puntos = 0 ;        //Variable global para los puntos
+unsigned long int puntos = 0 ;        //Variable global para los puntos
+short int vidas = 3 ;
+
+puntaje *Score ;
+puntaje *player_name ;
+puntaje *health ;
 
 int main(int argc, char *argv[])
 {

@@ -34,11 +34,13 @@ public:
 
     void Guardar_nuevo_jugador() ;  //Funcion que guarda el nuevo jugador ingresado
 
-    void Cargar_partida_1jugador() ;        //Funcion que lee el archivo de guardado  
+    void Cargar_partida_1jugador() ;        //Funcion que lee el archivo de guardado
 
     void nivel_1() ;        //Configuracion para el nivel 1 del juego
 
     void keyPressEvent( QKeyEvent *teclas);
+
+    void Guardar_progerso() ;
 
     ~MainWindow();
 
@@ -76,7 +78,7 @@ private:
 
     QMediaPlayer *music , *msc_2 ;  //Punteros que almacenaran la musica del menu y cuando se esté jugando
 
-    QSoundEffect *efecto_boton_click ;      //Puntero para loe efectos de sonido de click del menu
+    QSoundEffect *efecto_boton_click, *gameO_efecto, *sonido_disparo ;      //Puntero para loe efectos de sonido de click del menu
 
     QMessageBox * msg_box ;     //Puntero para crear los message box necesarios
 
