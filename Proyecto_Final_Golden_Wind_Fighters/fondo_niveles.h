@@ -20,6 +20,8 @@ public:
 
     int frame = 0 , num_escenario ;     //Variables utiles para la Animacion del fondo
 
+    QTimer *cambiar_frame ;     //Timer para la animacion de los fondos
+
 public slots:
 
     void frames() ;     //Slot que se encarga de animar el fondo
@@ -28,7 +30,7 @@ private:
 
     QPixmap escenario_1 , escenario_2 , escenario_3 , escenario_actual ;        //Sprites de los fondos
 
-    QTimer *cambiar_frame ;     //Timer para la animacion de los fondos
+
 
 
 

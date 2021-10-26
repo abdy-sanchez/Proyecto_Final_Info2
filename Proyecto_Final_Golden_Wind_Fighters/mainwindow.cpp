@@ -137,6 +137,12 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
     ui->Game_final->hide() ;
 
 
+        //Texto Mission Completed
+
+    ui->completado->setGeometry( 135 , 100 , 500 , 150 ) ;
+
+    ui->completado->hide() ;
+
 
 
 
@@ -149,6 +155,24 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
     music->setVolume(30) ;      //Definimos el nivel del volumen de la musica
 
     music->play() ;
+
+
+        //Configuracion Musica del final del juego
+
+    ending_theme = new QMediaPlayer() ;
+
+    ending_theme->setMedia( QUrl("qrc:/Recursos/mission-complete.mp3") ) ;
+
+    ending_theme->setVolume( 30 ) ;
+
+
+        //Configuracion efecto cambio de nivel
+
+    lvl_cambio = new QMediaPlayer() ;
+
+    lvl_cambio->setMedia( QUrl("qrc:/Recursos/powerup.mp3") ) ;
+
+
 
 
 
@@ -325,6 +349,34 @@ void MainWindow::Cargar_partida_1jugador(){
 
                 GAME->encontrado = true ;
 
+                    //sacamos los datos restantes (Avion sleccionado , nivel y puntos)
+
+
+                comparacion = linea.section(" " , 1 , 1 ) ;
+
+                comparacion = comparacion.section(":",1,1) ;
+
+                GAME->select_plane = comparacion.toInt() ;
+
+
+
+                comparacion = linea.section(" " , 2 , 2 ) ;
+
+                comparacion = comparacion.section(":" , 1  ,1 ) ;
+
+                GAME->nivel_jugador = comparacion.toInt() ;
+
+
+
+                comparacion = linea.section(" " , 3 , 3 ) ;
+
+                comparacion = comparacion.section(":" , 1 , 1 ).replace( ";" , "" ) ;
+
+                puntos = comparacion.toInt() ;
+
+                vidas = 1 ;     //Se le asigna solamente 1 vida al cargar
+
+
             }
 
 
@@ -489,7 +541,7 @@ void MainWindow::on_Multijugador_clicked(){         //Al presionar el boton de m
 
     ui->nueva_partida->show() ;
 
-    ui->cargar_partida->show() ;
+    ui->cargar_partida->hide() ;
 
     GAME->val_btn_presionado = 1 ;      //Se le asigana 1 a la variable
 
@@ -564,8 +616,7 @@ void MainWindow::on_cargar_partida_clicked(){       //Al presionar el boton de c
 
         }break;
 
-        case 1:{        //multijugador
-
+        case 1:{        //multijugador  [Fue descartado por razones de tiempo]
 
 
         }break;
@@ -618,6 +669,8 @@ void MainWindow::on_aceptar_clicked(){      //Al presionar el boton de aceptar
 
             set_interfaz_1() ;
 
+            delete  GAME->menu ;
+
             nivel_1() ;
         }
 
@@ -630,6 +683,8 @@ void MainWindow::on_aceptar_clicked(){      //Al presionar el boton de aceptar
             if( GAME->encontrado ){     //Si se cumplen las condiciones, se cargará la partida correspondiente
 
                 set_interfaz_1() ;
+
+
 
             }
             else{
@@ -675,6 +730,8 @@ void MainWindow::perdiste(){
 
         Guardar_progerso() ;
 
+        GAME->epic_fail = true ;
+
 
     }
 
@@ -701,9 +758,7 @@ void MainWindow::nivel_1(){     //Funcion para el nivel 1
 
     connect( timer_spawn_enemy , SIGNAL( timeout() ) , this , SLOT( spawn_enemigo() ) ) ;
 
-    timer_spawn_enemy->start( 2500 ) ;
-
-    delete  GAME->menu ;
+    timer_spawn_enemy->start( GAME->tiempo_enemigos ) ;
 
     Score = new puntaje() ;
 
@@ -723,6 +778,7 @@ void MainWindow::nivel_1(){     //Funcion para el nivel 1
 
     GAME->level_one->addItem( health ) ;
 
+    QTimer::singleShot( 60000 , this, SLOT( update_nivel() ) );     //cada nivel dura 1 minuto
 
 }
 
@@ -846,6 +902,8 @@ void MainWindow::Guardar_progerso(){
 }
 
 
+
+
 void MainWindow::barra_press(){
 
     GAME->dis_paro = true ;
@@ -894,4 +952,107 @@ void MainWindow::on_instrucciones_clicked(){
     ui->Multijugador->hide() ;
 
     ui->Salir->hide() ;
+}
+
+void MainWindow::update_nivel(){
+
+
+    if( !GAME->epic_fail ){
+
+
+        if( GAME->nivel_jugador < 3 ){
+
+            GAME->tecleable = false ;
+
+            GAME->nivel_jugador++ ;
+
+            puntos = puntos + 5000 ;
+
+            lvl_cambio->play() ;
+
+            GAME->tiempo_enemigos = GAME->tiempo_enemigos - 1500 ;
+
+            borrar_cambio_escena() ;
+
+            nivel_1() ;
+
+        }
+        else{
+
+
+            ui->completado->show() ;
+
+            msc_2->stop() ;
+
+            ending_theme->play() ;
+
+            GAME->Main_player->caida_libre->stop() ;
+
+            GAME->Main_player->animacion->stop() ;
+
+            GAME->backg_screen->cambiar_frame->stop() ;
+
+            ui->Salir->show() ;
+
+            GAME->tecleable = false ;
+
+            end_game->stop() ;
+
+            timer_spawn_enemy->stop() ;
+
+            Guardar_progerso() ;
+
+        }
+
+
+    }
+
+
+
+}
+
+
+void MainWindow::borrar_cambio_escena(){
+
+    GAME->Main_player->caida_libre->stop() ;
+
+    GAME->Main_player->animacion->stop() ;
+
+    ENEmigos->timer_enemy->stop() ;
+
+    GAME->level_one->removeItem( GAME->Main_player ) ;
+
+    GAME->backg_screen->cambiar_frame->stop() ;
+
+    GAME->level_one->removeItem( GAME->backg_screen ) ;
+
+
+    delete GAME->backg_screen ;
+
+
+    GAME->Revisar_game_over->stop() ;
+
+
+    delete GAME->Revisar_game_over ;
+
+
+    GAME->level_one->clear() ;
+
+
+    delete GAME->level_one ;
+
+
+    end_game->stop() ;
+
+
+    delete  end_game ;
+
+
+    timer_spawn_enemy->stop() ;
+
+
+    delete timer_spawn_enemy ;
+
+
+
 }

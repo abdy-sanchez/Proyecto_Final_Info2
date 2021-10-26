@@ -298,6 +298,22 @@
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="completado">
+    <property name="geometry">
+     <rect>
+      <x>546</x>
+      <y>252</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Recursos/mision_completa.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>graphicsView</zorder>
    <zorder>Jugar</zorder>
    <zorder>Multijugador</zorder>
@@ -315,6 +331,7 @@
    <zorder>Game_final</zorder>
    <zorder>instrucciones</zorder>
    <zorder>texto_instrucciones</zorder>
+   <zorder>completado</zorder>
   </widget>
  </widget>
  <resources/>

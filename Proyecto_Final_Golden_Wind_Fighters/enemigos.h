@@ -23,6 +23,8 @@ public:
 
     int frame = 0 ;
 
+    QTimer *timer_enemy ;
+
 public slots:
 
     void movimiento_enemigos() ;
@@ -39,7 +41,7 @@ private:
 
     bool collide = true ;
 
-    QTimer *timer_enemy ;
+
 
     QList<QGraphicsItem*> colisiones ;
 

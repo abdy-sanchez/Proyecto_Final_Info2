@@ -42,6 +42,8 @@ public:
 
     void Guardar_progerso() ;
 
+    void borrar_cambio_escena() ;
+
     ~MainWindow();
 
 private slots:
@@ -70,13 +72,15 @@ private slots:
 
     void on_instrucciones_clicked();
 
+    void update_nivel();
+
 private:
 
     Ui::MainWindow *ui;
 
     juego *GAME ;   //Puntero al Juego principal
 
-    QMediaPlayer *music , *msc_2 ;  //Punteros que almacenaran la musica del menu y cuando se esté jugando
+    QMediaPlayer *music , *msc_2, *ending_theme, *lvl_cambio ;  //Punteros que almacenaran la musica del menu y cuando se esté jugando
 
     QSoundEffect *efecto_boton_click, *gameO_efecto, *sonido_disparo ;      //Puntero para loe efectos de sonido de click del menu
 

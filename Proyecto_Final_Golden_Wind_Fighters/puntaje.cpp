@@ -17,10 +17,7 @@ void puntaje::aumentar_puntaje( int num ){
 
         puntos = puntos + 200 ;
     }
-    else{
 
-        puntos = 0 ;
-    }
 
 
     setPlainText( QString( "Puntaje: " ) + QString::number( puntos ) ) ;

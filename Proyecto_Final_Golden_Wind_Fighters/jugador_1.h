@@ -25,6 +25,7 @@ public:
 
     bool GAME_OVER = false , choque = true ;
 
+    QTimer *animacion, *caida_libre ;     //Timer para la animacion del avion
 
     unsigned long long n = 0 ;
 
@@ -40,9 +41,7 @@ public slots:
 
 private:
 
-    QPixmap sprite_jugador , sprite_actual ;        //Aqui se guardan los sprites del avion
-
-    QTimer *animacion, *caida_libre ;     //Timer para la animacion del avion
+    QPixmap sprite_jugador , sprite_actual ;        //Aqui se guardan los sprites del avion    
 
     QList<QGraphicsItem*> colisiones ;
 

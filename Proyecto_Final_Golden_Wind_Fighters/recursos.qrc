@@ -35,5 +35,8 @@
         <file>Recursos/explosion.wav</file>
         <file>Recursos/gun-shot.wav</file>
         <file>Recursos/Lose.wav</file>
+        <file>Recursos/mision_completa.png</file>
+        <file>Recursos/mission-complete.mp3</file>
+        <file>Recursos/powerup.mp3</file>
     </qresource>
 </RCC>
