@@ -39,11 +39,11 @@ private:
 
     QGraphicsScene *menu, *level_one ;      //Escenas del menu y el nivel 1
 
-    int val_btn_presionado, nivel_jugador = 1, puntos_jugador = 0 , select_plane, tiempo_enemigos = 4000 ;  //Variables importantes para la configuracion del juego
+    int val_btn_presionado, nivel_jugador = 1, int_flag = 0 , select_plane, tiempo_enemigos = 4000 , puntos_1player = 0 , puntos_2player = 0 ;  //Variables importantes para la configuracion del juego
 
     QString nombre_jugador ;        //Qstring que contenfrá el nombre del jugador
 
-    bool condicion_aceptar = true , encontrado = false , existente_name = true , Fin_partida = false , tecleable = false , dis_paro = true, epic_fail = false ;    //Variables utiles para el manejo del menu
+    bool condicion_aceptar = true , encontrado = false , existente_name = true , Fin_partida = false , tecleable = false , dis_paro = true, epic_fail = false , flag_multip = true ;    //Variables utiles para el manejo del menu
 
     Jugador_1 *Main_player ;    //Puntero para el objeto jugador
 

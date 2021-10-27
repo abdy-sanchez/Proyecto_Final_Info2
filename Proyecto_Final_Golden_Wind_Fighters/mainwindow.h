@@ -44,6 +44,8 @@ public:
 
     void borrar_cambio_escena() ;
 
+    void multi_jugador() ;
+
     ~MainWindow();
 
 private slots:
@@ -73,6 +75,12 @@ private slots:
     void on_instrucciones_clicked();
 
     void update_nivel();
+
+    void change_player_multiP() ;
+
+    void perdiste_multiplayer() ;
+
+    void final_multiP() ;
 
 private:
 

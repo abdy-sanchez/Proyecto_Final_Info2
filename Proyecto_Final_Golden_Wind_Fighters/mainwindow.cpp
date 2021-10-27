@@ -176,8 +176,6 @@ void MainWindow::setMenu(){     //Funcion en la cual se inicializa y muestra el 
 
 
 
-
-
         //Configuracion de la musica del juego
 
     msc_2 = new QMediaPlayer() ;
@@ -298,7 +296,7 @@ void MainWindow::Guardar_nuevo_jugador(){
     if( GAME->existente_name ){     //Si el nombre no existe anteriormente, es creado y guardado
 
 
-        out << GAME->nombre_jugador.replace( " ", "_" ) << " Avn:" << GAME->select_plane << " N:" << GAME->nivel_jugador << " P:" << GAME->puntos_jugador << ";" ;
+        out << GAME->nombre_jugador.replace( " ", "_" ) << " Avn:" << GAME->select_plane << " N:" << GAME->nivel_jugador << " P:" << puntos << ";" ;
 
         out << "\n" ;
 
@@ -365,6 +363,23 @@ void MainWindow::Cargar_partida_1jugador(){
                 comparacion = comparacion.section(":" , 1  ,1 ) ;
 
                 GAME->nivel_jugador = comparacion.toInt() ;
+
+
+                if( GAME->nivel_jugador == 1 ){
+
+                    GAME->tiempo_enemigos = 4000 ;
+
+                }
+                else if( GAME->nivel_jugador == 2 ){
+
+                   GAME->tiempo_enemigos = 2500 ;
+
+                }
+                else{
+
+                    GAME->tiempo_enemigos = 1000 ;
+
+                }
 
 
 
@@ -583,6 +598,12 @@ void MainWindow::on_nueva_partida_clicked(){        //Al presionar el boton de n
         case 1:{        //multijugador
 
 
+            set_interfaz_1() ;
+
+            delete  GAME->menu ;
+
+            multi_jugador() ;
+
 
         }break;
 
@@ -616,10 +637,10 @@ void MainWindow::on_cargar_partida_clicked(){       //Al presionar el boton de c
 
         }break;
 
-        case 1:{        //multijugador  [Fue descartado por razones de tiempo]
+       // case 1:{        //multijugador  [Fue descartado por razones de tiempo]
 
 
-        }break;
+       // }break;
 
     }
 
@@ -684,6 +705,9 @@ void MainWindow::on_aceptar_clicked(){      //Al presionar el boton de aceptar
 
                 set_interfaz_1() ;
 
+                delete  GAME->menu ;
+
+                nivel_1() ;
 
 
             }
@@ -734,6 +758,8 @@ void MainWindow::perdiste(){
 
 
     }
+
+
 
 }
 
@@ -923,7 +949,7 @@ void MainWindow::spawn_enemigo(){
 
     if( random_num1 == 2 ){
 
-       random_num2 = rand()%430 ;
+       random_num2 = rand()%420 ;
 
        ENEmigos->setPos( 800 , random_num2 ) ;
     }
@@ -952,6 +978,7 @@ void MainWindow::on_instrucciones_clicked(){
     ui->Multijugador->hide() ;
 
     ui->Salir->hide() ;
+
 }
 
 void MainWindow::update_nivel(){
@@ -1012,6 +1039,8 @@ void MainWindow::update_nivel(){
 }
 
 
+
+
 void MainWindow::borrar_cambio_escena(){
 
     GAME->Main_player->caida_libre->stop() ;
@@ -1053,6 +1082,195 @@ void MainWindow::borrar_cambio_escena(){
 
     delete timer_spawn_enemy ;
 
+
+
+}
+
+void MainWindow::multi_jugador(){
+
+    //Sistema de turnos, 60 segundos cada uno, el que haga más puntos
+
+    GAME->nombre_jugador = "player_1" ;
+
+    GAME->select_plane = 1 + rand()%2 ;     //Un avion aleatorio
+
+    GAME->nivel_jugador = 3 ;
+
+    GAME->tiempo_enemigos = 1000 ;
+
+    vidas = 1 ;     //Se juega de a 1 vida
+
+    //Montamos el nivel
+
+    GAME->set_level_one() ;
+
+    ui->graphicsView->setScene( GAME->level_one );
+
+    end_game = new QTimer() ;
+
+    connect( end_game , SIGNAL( timeout() ) , this , SLOT( perdiste_multiplayer() ) ) ;
+
+    end_game->start( 10 ) ;
+
+    GAME->tecleable = true ;
+
+    timer_spawn_enemy = new QTimer() ;
+
+    connect( timer_spawn_enemy , SIGNAL( timeout() ) , this , SLOT( spawn_enemigo() ) ) ;
+
+    timer_spawn_enemy->start( GAME->tiempo_enemigos ) ;
+
+    Score = new puntaje() ;
+
+    player_name = new puntaje() ;
+
+    health = new puntaje() ;
+
+    health->salud( 1 ) ;
+
+    Score->aumentar_puntaje( 3 ) ;
+
+    player_name->whos_playing( GAME->nombre_jugador ) ;
+
+    GAME->level_one->addItem( Score ) ;
+
+    GAME->level_one->addItem( player_name ) ;
+
+    GAME->level_one->addItem( health ) ;
+
+    QTimer::singleShot( 60000 , this, SLOT( change_player_multiP() ) );
+
+}
+
+
+void MainWindow::change_player_multiP(){
+
+
+    GAME->flag_multip = false ;
+
+    GAME->int_flag = 1 ;
+
+
+    if( !GAME->epic_fail ){
+
+
+        GAME->puntos_1player = puntos ;
+
+        delete Score ;
+
+        delete health ;
+
+        delete player_name ;
+
+
+        borrar_cambio_escena() ;
+
+        GAME->nombre_jugador = "player_2" ;
+
+        GAME->select_plane = 1 + rand()%2 ;     //Un avion aleatorio
+
+        GAME->nivel_jugador = 3 ;
+
+        GAME->tiempo_enemigos = 1000 ;
+
+        vidas = 1 ;     //Se juega de a 1 vida
+
+        puntos = 0 ;
+
+        GAME->set_level_one() ;
+
+        ui->graphicsView->setScene( GAME->level_one );
+
+        end_game = new QTimer() ;
+
+        connect( end_game , SIGNAL( timeout() ) , this , SLOT( perdiste_multiplayer() ) ) ;
+
+        end_game->start( 10 ) ;
+
+        GAME->tecleable = true ;
+
+        timer_spawn_enemy = new QTimer() ;
+
+        connect( timer_spawn_enemy , SIGNAL( timeout() ) , this , SLOT( spawn_enemigo() ) ) ;
+
+        timer_spawn_enemy->start( GAME->tiempo_enemigos ) ;
+
+        Score = new puntaje() ;
+
+        player_name = new puntaje() ;
+
+        health = new puntaje() ;
+
+        health->salud( 1 ) ;
+
+        Score->aumentar_puntaje( 3 ) ;
+
+        player_name->whos_playing( GAME->nombre_jugador ) ;
+
+        GAME->level_one->addItem( Score ) ;
+
+        GAME->level_one->addItem( player_name ) ;
+
+        GAME->level_one->addItem( health ) ;
+
+        QTimer::singleShot( 60000 , this, SLOT( final_multiP() ) );
+
+    }
+
+
+}
+
+void MainWindow::perdiste_multiplayer(){
+
+    if( GAME->Fin_partida && GAME->flag_multip ){
+
+
+        change_player_multiP() ;
+
+        GAME->epic_fail = true ;
+
+        GAME->flag_multip = false ;
+
+        GAME->Fin_partida = false ;
+
+        GAME->int_flag = 1 ;
+
+    }
+
+
+    if( GAME->Fin_partida && GAME->int_flag == 1 ){
+
+        msc_2->stop() ;
+
+        ui->Salir->show() ;
+
+        GAME->tecleable = false ;
+
+        end_game->stop() ;
+
+        timer_spawn_enemy->stop() ;
+
+        GAME->puntos_2player = puntos ;
+
+        if( GAME->puntos_1player > GAME->puntos_2player ){
+
+            qDebug() << "GANA EL PLAYER 1 -->" << GAME->puntos_1player ;
+        }
+        else{
+
+             qDebug() << "GANA EL PLAYER 2 -->" << GAME->puntos_2player ;
+        }
+
+    }
+
+
+}
+
+void MainWindow::final_multiP(){
+
+    //final del tiempo 2 player
+
+    GAME->Fin_partida = true ;
 
 
 }

@@ -6,7 +6,7 @@ extern puntaje *health ;
 
 Jugador_1::Jugador_1( int n ){
 
-    //n == 0 ->Avion morado ; n== 1 -> avion azul
+    //n == 1 ->Avion morado ; n== 2 -> avion azul
 
     switch( n ){            //Alistamos los recursos necesarios para el sprite del jugador
 
