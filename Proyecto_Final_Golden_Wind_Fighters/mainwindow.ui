@@ -314,6 +314,54 @@
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="ganador_p1_txt">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>40</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Recursos/W_p1.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ganador_p2_txt">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>80</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Recursos/W_p2.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="rush_multip">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>120</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/Recursos/rush.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>graphicsView</zorder>
    <zorder>Jugar</zorder>
    <zorder>Multijugador</zorder>
@@ -332,6 +380,9 @@
    <zorder>instrucciones</zorder>
    <zorder>texto_instrucciones</zorder>
    <zorder>completado</zorder>
+   <zorder>ganador_p1_txt</zorder>
+   <zorder>ganador_p2_txt</zorder>
+   <zorder>rush_multip</zorder>
   </widget>
  </widget>
  <resources/>

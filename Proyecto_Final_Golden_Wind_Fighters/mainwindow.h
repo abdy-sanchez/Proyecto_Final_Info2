@@ -90,7 +90,7 @@ private:
 
     QMediaPlayer *music , *msc_2, *ending_theme, *lvl_cambio ;  //Punteros que almacenaran la musica del menu y cuando se esté jugando
 
-    QSoundEffect *efecto_boton_click, *gameO_efecto, *sonido_disparo ;      //Puntero para loe efectos de sonido de click del menu
+    QSoundEffect *efecto_boton_click, *gameO_efecto, *sonido_disparo , *cambio_p_effect ;      //Puntero para loe efectos de sonido de click del menu
 
     QMessageBox * msg_box ;     //Puntero para crear los message box necesarios
 

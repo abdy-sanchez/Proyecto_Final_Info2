@@ -8,7 +8,6 @@
         <file>Recursos/btn_back.png</file>
         <file>Recursos/btn_exit.png</file>
         <file>Recursos/btn_multiplayer.png</file>
-        <file>Recursos/8-bit-kit-beep.wav</file>
         <file>Recursos/hit-01.wav</file>
         <file>Recursos/btn_loadpartida.png</file>
         <file>Recursos/btn_npartida.png</file>
@@ -23,9 +22,6 @@
         <file>Recursos/newStage2.png</file>
         <file>Recursos/game_over.png</file>
         <file>Recursos/bullet.png</file>
-        <file>Recursos/New_enemigo_1.png</file>
-        <file>Recursos/new_enemigo_2.png</file>
-        <file>Recursos/new_enemigo_3.png</file>
         <file>Recursos/btn_info.png</file>
         <file>Recursos/instrucciones.png</file>
         <file>Recursos/New_enemigo_100.png</file>
@@ -38,5 +34,9 @@
         <file>Recursos/mision_completa.png</file>
         <file>Recursos/mission-complete.mp3</file>
         <file>Recursos/powerup.mp3</file>
+        <file>Recursos/rush.png</file>
+        <file>Recursos/W_p1.png</file>
+        <file>Recursos/W_p2.png</file>
+        <file>Recursos/lushlife-levelup.wav</file>
     </qresource>
 </RCC>
